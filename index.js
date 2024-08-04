@@ -9,6 +9,9 @@ const io = new Server(server);
 // Menyajikan file statis dari direktori 'public'
 app.use(express.static('public'));
 
+// Menyajikan socket.io
+app.use('/socket.io', express.static(require.resolve('socket.io')));
+
 io.on('connection', (socket) => {
 console.log('a user connected');
 
