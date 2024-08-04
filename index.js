@@ -6,6 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+// Menyajikan file statis dari direktori 'public'
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
@@ -20,6 +21,15 @@ console.log('user disconnected');
 });
 });
 
-server.listen(3000, () => {
-console.log('Server is running on http://localhost:3000');
+// Untuk menangani semua permintaan, arahkan ke index.html
+app.get('*', (req, res) => {
+res.sendFile(__dirname + '/public/index.html');
 });
+
+// Gunakan port yang diberikan oleh Vercel
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+console.log(`Server is running on port ${PORT}`);
+});
+
+module.exports = app;
